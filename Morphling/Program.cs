@@ -15,9 +15,9 @@ namespace Morphling
     {
         private static bool _activated;
         private static Ability waveform, adapt;
-        private static Item etheral;
+        private static Item eblade, bkb;
         private static Font _text;
-        private const Key KeyCombo = Key.E;
+        private const Key KeyCombo = Key.G;
         private const Key BkbToggleKey = Key.F;
         private static bool _bkbToggle;
         private static Hero _me;
@@ -57,7 +57,8 @@ namespace Morphling
             //Skills & Items
             waveform = _me.Spellbook.Spell1;
             adapt = _me.Spellbook.Spell2;
-            etheral = _me.FindItem("item_etheral_blade");
+            eblade = _me.FindItem("item_ethereal_blade");
+            bkb = _me.FindItem("item_black_king_bar");
             if (_target != null && _target.IsAlive && !_target.IsInvul())
             {
                 if (!Utils.SleepCheck("Morph_Wait")) return;
@@ -68,10 +69,15 @@ namespace Morphling
                     waveform.UseAbility(_target.Position);
                     Utils.Sleep(150 + Game.Ping, "waveform");
                 }
-                else if (etheral != null && etheral.CanBeCasted() && Utils.SleepCheck("ethereal"))
+                else if (bkb !=null && _bkbToggle && Utils.SleepCheck("BKB"))
                 {
-                    etheral.UseAbility(_target);
-                    Utils.Sleep(270 + Game.Ping, "ethereal");
+                    bkb.UseAbility();
+                    Utils.Sleep(150 + Game.Ping, "BKB");
+                }
+                else if (eblade != null && eblade.CanBeCasted() && Utils.SleepCheck("eblade"))
+                {
+                    eblade.UseAbility(_target);
+                    Utils.Sleep(150 + Game.Ping, "eblade");
                 }
                 else if (adapt != null && adapt.CanBeCasted() && Utils.SleepCheck("adapt"))
                 {
